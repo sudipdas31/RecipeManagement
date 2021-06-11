@@ -1,0 +1,37 @@
+@Putmapping
+EndPoint:
+http://localhost:3026/api/recipex/100
+test:
+{
+    "id":100,
+    "name": "SALMON steak",
+    "ingredients": "salmon fillet, salt, pepper, olive oil",
+    "instructions":"Fire the grill and put the marinated fillet with salt pepper and olive oil",
+    "servings":5,
+    "category": "Non-veg"
+}
+
+@PostMapping
+EndPoint:
+http://localhost:3026/api/recipex
+test:
+{
+    "id":105,
+    "name": "Brownie",
+    "ingredients": "Brownie mix, 2 eggs,150ml milk, 100gram butter",
+    "instructions":"mix the ingredients and bake it in 200 degree for 45 mins",
+    "servings":8,
+    "category": "Non-vegan"
+}
+
+@DeleteMapping
+EndPoint:
+http://localhost:3026/api/recipex/102
+
+@GetMapping for one recipe
+Endpoint:
+http://localhost:3026/api/recipex/101
+
+@GetMapping for all
+Endpoint:
+http://localhost:3026/api/recipes
