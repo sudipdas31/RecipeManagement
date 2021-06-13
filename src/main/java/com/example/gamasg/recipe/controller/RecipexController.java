@@ -2,13 +2,13 @@ package com.example.gamasg.recipe.controller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Optional;
 import javax.validation.Valid;
+
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,8 +23,10 @@ import com.example.gamasg.recipe.repository.RecipexRepository;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "${client.url}")
+@Log4j2
 public class RecipexController {
+
     private RecipexRepository recipexRepository;
 
     public RecipexController(RecipexRepository recipexRepository) {
@@ -32,43 +34,42 @@ public class RecipexController {
         this.recipexRepository = recipexRepository;
     }
 
-    @GetMapping("")
-    String startPage() {
-        return "index";
-    }
-
     @GetMapping("/recipes")
-   // Collection<Recipex> recipes() {
-    String recipes() {
+    public Collection<Recipex> recipes() {
         //Equivalent to select * from recipex
-    //    System.out.println(System.currentTimeMillis());
-      //  return recipexRepository.findAll();
-
-        return "recipeBoard";
+        log.debug("All Recipes fetched");
+        return recipexRepository.findAll();
     }
 
     @GetMapping("/recipex/{id}")
-    ResponseEntity<?> getRecipex(@PathVariable Long id) {
+    public ResponseEntity<Recipex> getRecipex(@PathVariable Long id) {
         Optional<Recipex> recipex = recipexRepository.findById(id);
+        log.info("Recipe for id: " + id);
         return recipex.map(response -> ResponseEntity.ok().body(response))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping("/recipex")
-    ResponseEntity<Recipex> createRecipex(@Valid @RequestBody Recipex recipex) throws URISyntaxException {
+    public ResponseEntity<Recipex> createRecipex(@Valid @RequestBody Recipex recipex) throws URISyntaxException {
         Recipex result = recipexRepository.save(recipex);
-        //result.setCreated(LocalDateTime.now());
+        log.info("recipe created with name: " + recipex.getName());
         return ResponseEntity.created(new URI("/api/recipex" + result.getId())).body(result);
     }
 
     @PutMapping("/recipex/{id}")
-    ResponseEntity<Recipex> updateRecipex(@Valid @RequestBody Recipex recipex) {
+    public ResponseEntity<Recipex> updateRecipex(@Valid @RequestBody Recipex recipex, @PathVariable Long id) {
+        if (!recipex.getId().equals(id)) {
+            log.info("id does not exist");
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         Recipex result = recipexRepository.save(recipex);
+        log.info("recipe updated with name: " + recipex.getName());
         return ResponseEntity.ok().body(result);
     }
 
     @DeleteMapping("/recipex/{id}")
-    ResponseEntity<?> deleteRecipex(@PathVariable Long id) {
+    public ResponseEntity<Recipex> deleteRecipex(@PathVariable Long id) {
+        log.info("recipe delete with id: " + id);
         recipexRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
