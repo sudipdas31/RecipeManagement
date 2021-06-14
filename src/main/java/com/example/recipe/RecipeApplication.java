@@ -1,4 +1,4 @@
-package com.example.gamasg.recipe;
+package com.example.recipe;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

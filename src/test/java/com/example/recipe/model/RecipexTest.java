@@ -1,4 +1,4 @@
-package com.example.gamasg.recipe.model;
+package com.example.recipe.model;
 
 import org.junit.jupiter.api.Test;
 

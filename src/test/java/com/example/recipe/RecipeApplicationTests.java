@@ -1,6 +1,6 @@
-package com.example.gamasg.recipe;
+package com.example.recipe;
 
-import com.example.gamasg.recipe.controller.RecipexController;
+import com.example.recipe.controller.RecipexController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

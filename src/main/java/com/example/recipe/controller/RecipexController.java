@@ -1,4 +1,4 @@
-package com.example.gamasg.recipe.controller;
+package com.example.recipe.controller;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.gamasg.recipe.model.Recipex;
-import com.example.gamasg.recipe.repository.RecipexRepository;
+import com.example.recipe.model.Recipex;
+import com.example.recipe.repository.RecipexRepository;
 
 @RestController
 @RequestMapping("/api")
